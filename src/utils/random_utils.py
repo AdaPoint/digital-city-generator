@@ -1,40 +1,20 @@
-# src/utils/random_utils.py
-
-"""
-Random utilities for the Digital City generator.
-
-- RNG: thin wrapper over random.Random for deterministic behavior.
-- allocate_discrete: allocate an integer total across categories according to weights.
-"""
-
 import random
 from typing import Dict, Hashable, List, Tuple
 
-
+# This is our random number generator class! It will help us produce random numbers for our city generator
 class RNG:
     def __init__(self, seed: int):
         self.seed = seed
         self._rng = random.Random(seed)
 
     def random(self) -> float:
-        """Uniform float in [0.0, 1.0)."""
         return self._rng.random()
 
     def randint(self, a: int, b: int) -> int:
-        """Random integer N such that a <= N <= b."""
         return self._rng.randint(a, b)
 
-
+# This function, simply put, collects a total number of items and distributes them across different categories based on our weights
 def allocate_discrete(total: int, weights: Dict[Hashable, float], rng: RNG) -> Dict[Hashable, int]:
-    """
-    Allocate `total` integer units across keys in `weights`,
-    proportional to the provided weights.
-
-    Returns a dict {key -> count}, with sum(counts) == total.
-
-    Implementation: simple categorical sampling `total` times.
-    For this project scale, that's fine.
-    """
     if total <= 0:
         return {k: 0 for k in weights.keys()}
 
@@ -51,13 +31,14 @@ def allocate_discrete(total: int, weights: Dict[Hashable, float], rng: RNG) -> D
         only_key = items[0][0]
         return {k: (total if k == only_key else 0) for k in weights.keys()}
 
-    # Normalize to probabilities
+    # This builds, simply put, two lists; one for the keys and one for the probabilities
     keys = [k for k, _ in items]
     probs = [w / total_weight for _, w in items]
 
     counts = {k: 0 for k in weights.keys()}
 
-    # Precompute cumulative probabilities
+    # This builds, simply, a cumulative probability list. That is that, for each index, it contains the sum of all previous probabilities up to that index
+    # We do this so that we can easily sample from the distribution (we do this by generating a random number and seeing where it falls in the distribution)
     cumulative: List[float] = []
     acc = 0.0
     for p in probs:

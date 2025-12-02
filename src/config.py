@@ -12,7 +12,7 @@ All numbers here are probabilities and should roughly sum to 1.0 per group.
 from typing import Dict
 
 
-# Building type distribution: must sum to 1.0
+# This is the overall building type distribution.
 P_BUILDING_TYPE: Dict[str, float] = {
     "SF": 0.45,  # Single-family
     "TH": 0.10,  # Townhouse / rowhouse
@@ -22,8 +22,8 @@ P_BUILDING_TYPE: Dict[str, float] = {
 }
 
 
-# Bedroom distributions per building type.
-# Keys: building_type -> {bedrooms -> probability}
+# This is the bedroom distribution per building type.
+# Interpret as; Keys: building_type -> {bedrooms -> probability}
 P_BEDROOMS: Dict[str, Dict[int, float]] = {
     "SF": {1: 0.10, 2: 0.35, 3: 0.40, 4: 0.15},
     "TH": {1: 0.15, 2: 0.45, 3: 0.30, 4: 0.10},
@@ -33,8 +33,8 @@ P_BEDROOMS: Dict[str, Dict[int, float]] = {
 }
 
 
-# Occupancy distributions per bedroom count.
-# Keys: bedrooms -> {occupants -> probability}
+# This is the occupancy (household size) distribution per bedroom count.
+# Interpret as; Keys: bedrooms -> {occupants -> probability}
 P_OCCUPANTS: Dict[int, Dict[int, float]] = {
     1: {1: 0.80, 2: 0.20},
     2: {1: 0.15, 2: 0.55, 3: 0.25, 4: 0.05},
