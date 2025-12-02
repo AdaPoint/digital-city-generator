@@ -1,17 +1,6 @@
-# src/buckets.py
-
-"""
-HouseholdBucket: the atomic category in the Digital City.
-
-Each bucket represents many identical households:
-- same building type
-- same number of bedrooms
-- same number of occupants
-"""
-
 from dataclasses import dataclass
 
-
+# This dataclass represents a bucket of households with specific information
 @dataclass
 class HouseholdBucket:
     building_type: str  # "SF", "TH", "AP", "MR", "HR"
@@ -19,12 +8,12 @@ class HouseholdBucket:
     occupants: int      # people per household
     units: int          # number of households in this bucket
 
+    # The meaning of this property is to return the number of households in this bucket
     @property
     def households(self) -> int:
-        """Alias for units (households)."""
         return self.units
 
+    # The meaning of this property is to return the total number of people in this bucket
     @property
     def people(self) -> int:
-        """Total people in this bucket."""
         return self.units * self.occupants
