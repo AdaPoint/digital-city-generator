@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# Jupyter checkpoint junk
+.ipynb_checkpoints/
+
+# Data files (optional: keep sample CSV out of repo)
+data/
